@@ -1,72 +1,36 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 
-const data = [
-  { id: 1, name: "San pham A", price: 100 },
-  { id: 2, name: "San pham B", price: 300 },
-  { id: 3, name: "San pham C", price: 200 },
-];
-
-/**
- * * 1. Làm hiển thị danh sách sản phẩm ra màn hình dạng bảng.
- * * 2. tạo chức năng select option để sort theo tên a-z, z-a, giá tăng dần, giảm dần, reset sort.
- */
-
-const options = [
-  { value: 1, name: "Tên từ A đến Z" },
-  { value: 2, name: "Tên từ Z đến A" },
-  { value: 3, name: "Giá tăng dần" },
-  { value: 4, name: "Giá giảm dần" },
-];
-
 function App() {
-  const [products, setProducts] = useState(data);
+  const [products, setProducts] = useState([]);
+  const [page, setPage] = useState(1);
 
-  const handleChangeSort = () => {
-    const newProducts = [...products].sort((a, b) => {
-      switch (event.target.value) {
-        case "1":
-          return a.name > b.name ? 1 : -1;
-        case "2":
-          return a.name > b.name ? -1 : 1;
-        case "3":
-          return a.price - b.price;
-        case "4":
-          return b.price - a.price;
-        default:
-          break;
-      }
-    });
-    setProducts(newProducts);
+  useEffect(() => {
+    fetch(`https://dummyjson.com/products?limit=4&skip=${4 * (page - 1)}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setProducts(data.products);
+      });
+  }, [page]);
+
+  // * Cach 1: deps là array rỗng
+  // * Cach 2: deps có chứa sự phụ thuộc, mỗi lần các dữ liệu phụ thuộc thay đổi thì callback trong useEffect được gọi
+  const handlePage = (value) => {
+    setPage(page + value);
   };
-
   return (
     <>
-      <select onChange={() => handleChangeSort()}>
-        {options.map((item) => (
-          <option key={item.value} value={item.value}>
-            {item.name}
-          </option>
-        ))}
-      </select>
-      <table>
-        <thead>
-          <tr>
-            <td>ID</td>
-            <td>Name</td>
-            <td>Price</td>
-          </tr>
-        </thead>
-        <tbody>
-          {products.map((item) => (
-            <tr key={item.id}>
-              <td>{item.id}</td>
-              <td>{item.name}</td>
-              <td>{item.price}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      {products.map((item) => (
+        <div key={item.id}>
+          <h2>{item.title}</h2>
+          <img src={item.thumbnail} alt={item.title} height={"80px"} />
+        </div>
+      ))}
+      <div>
+        <button onClick={() => handlePage(-1)}>{"<"}</button>
+        <button>{page}</button>
+        <button onClick={() => handlePage(1)}>{">"}</button>
+      </div>
     </>
   );
 }
