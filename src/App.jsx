@@ -18,6 +18,8 @@ function App() {
   const handlePage = (value) => {
     setPage(page + value);
   };
+
+  //** Hãy tạo lại tính năng sort theo title và price với dummyjson và useEffect. */
   return (
     <>
       {products.map((item) => (
