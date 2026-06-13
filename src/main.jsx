@@ -7,9 +7,9 @@ import LeMinhHieu from "./LeMinhHieu.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    {/* <App /> */}
+    <App />
     {/* <TienAn /> */}
-    <LeMinhHieu />
+    {/* <LeMinhHieu /> */}
   </StrictMode>
 );
 
