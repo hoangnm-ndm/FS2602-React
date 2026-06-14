@@ -11,6 +11,8 @@ import { createBrowserRouter, RouterProvider } from "react-router";
 import Dashboard from "@/pages/admin/Dashboard";
 import ProductPage from "@/pages/client/ProductPage";
 import { ProductDetailPage } from "@/pages/client/ProductDetailPage";
+import ProtectedRouter from "./ProtectedRouter";
+import adminRoutes from "./adminroutes";
 
 const router = createBrowserRouter([
   // * CLIENT
@@ -44,8 +46,12 @@ const router = createBrowserRouter([
 
   {
     path: "/admin",
-    element: <LayoutAdmin />,
-    children: [{ index: true, element: <Dashboard /> }],
+    element: (
+      <ProtectedRouter>
+        <LayoutAdmin />
+      </ProtectedRouter>
+    ),
+    children: adminRoutes,
   },
 
   {
