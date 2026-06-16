@@ -1,26 +1,17 @@
+import { deleteBlog, getBlogs } from "@/api/blogApi";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router";
-
-const url = "http://localhost:4000/blogs";
 
 const BlogPage = () => {
   const [blogs, setBlogs] = useState([]);
 
   useEffect(() => {
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setBlogs(data);
-      });
+    (async () => {
+      const data = await getBlogs();
+      setBlogs(data);
+    })();
   }, []);
 
-  const handleDelete = async (id) => {
-    const data = await fetch(`${url}/${id}`, {
-      method: "DELETE",
-    });
-    console.log(data);
-  };
   return (
     <>
       <h1>Blog Management</h1>
@@ -47,7 +38,7 @@ const BlogPage = () => {
                 <td>{item.author}</td>
                 <td>{item.status}</td>
                 <td>
-                  <button onClick={() => handleDelete(item.id)}>Delete</button>
+                  <button onClick={() => deleteBlog(item.id)}>Delete</button>
                   <Link to={`update/${item.id}`}>Update</Link>
                 </td>
               </tr>

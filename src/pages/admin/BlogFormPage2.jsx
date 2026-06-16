@@ -1,4 +1,3 @@
-import * as React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -34,7 +33,9 @@ import {
   SelectItem,
   SelectSeparator,
 } from "@/components/ui/select";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
+import { addNewBlog, getDetailBlog } from "@/api/blogApi";
+import { useEffect } from "react";
 
 const statusArr = [
   { value: "draft", name: "Draft" },
@@ -43,6 +44,7 @@ const statusArr = [
 
 export function BlogFormPage2() {
   const nav = useNavigate();
+  const { id } = useParams();
   const form = useForm({
     resolver: zodResolver(blogAddSchema),
     defaultValues: {
@@ -52,7 +54,14 @@ export function BlogFormPage2() {
     },
   });
 
-  function onSubmit(data) {
+  useEffect(() => {
+    (async () => {
+      const data = await getDetailBlog(id);
+      form.reset(data);
+    })();
+  }, [id]);
+
+  async function onSubmit(data) {
     toast("You submitted the following values:", {
       description: (
         <pre className="mt-2 w-[320px] overflow-x-auto rounded-md bg-code p-4 text-code-foreground">
@@ -68,23 +77,13 @@ export function BlogFormPage2() {
       },
     });
 
-    fetch("http://localhost:4000/blogs", {
-      method: "POST",
-      headers: {
-        "Content-Type": "Application/json",
-      },
-      body: JSON.stringify({ ...data, createAt: Date.now() }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        console.log("thanh cong!");
-        // reset();
-        nav("/admin/blogs");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    if (id) {
+      // update
+    } else {
+      // add
+      const data = await addNewBlog(data);
+      // ...
+    }
   }
 
   return (
@@ -185,7 +184,7 @@ export function BlogFormPage2() {
             Reset
           </Button>
           <Button type="submit" form="form-rhf-demo">
-            Submit
+            {id ? "Update" : "Add"}
           </Button>
         </Field>
       </CardFooter>

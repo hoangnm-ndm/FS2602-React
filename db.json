@@ -33,33 +33,6 @@
       "content": "noi dung blog",
       "status": "published",
       "id": 5
-    },
-    {
-      "title": "sdsdsdsds",
-      "content": "",
-      "status": "published",
-      "id": 6
-    },
-    {
-      "title": "sdadsad",
-      "content": "asdadsadsasdsadsads",
-      "status": "draft",
-      "createAt": 1781617031650,
-      "id": 7
-    },
-    {
-      "title": "test thử blog với shadcn",
-      "content": "sadsdadsadsaddsa",
-      "status": "published",
-      "createAt": 1781621201945,
-      "id": 8
-    },
-    {
-      "title": "dsfsdfdsgfds",
-      "content": "fdgfdgfgdgdgfgdfgdf",
-      "status": "published",
-      "createAt": 1781621229512,
-      "id": 9
     }
   ]
 }
