@@ -24,7 +24,7 @@ import {
   InputGroupText,
   InputGroupTextarea,
 } from "@/components/ui/input-group";
-import { blogAddSchema } from "@/schemas/Blog";
+import { blogAddSchema } from "@/schemas/blogSchema";
 import {
   Select,
   SelectTrigger,

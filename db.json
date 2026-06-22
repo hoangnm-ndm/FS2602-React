@@ -1,38 +1,19 @@
 {
-  "blogs": [
+  "posts": [
     {
       "id": 1,
-      "title": "First Blog Post",
-      "content": "This is the content of the first blog post.",
-      "author": "John Doe",
-      "status": "published",
-      "date": "2024-06-01"
-    },
-    {
-      "id": 2,
-      "title": "Second Blog Post",
-      "content": "This is the content of the second blog post.",
-      "author": "Jane Smith",
-      "status": "draft",
-      "date": "2024-06-02"
-    },
-    {
-      "title": "blog moi",
-      "content": "noi dunfg day",
-      "status": "published",
-      "id": 3
-    },
-    {
-      "title": "sdsdsd",
-      "content": "sadsadsdsad",
-      "status": "draft",
-      "id": 4
-    },
-    {
-      "title": "them cai nua",
-      "content": "noi dung blog",
-      "status": "published",
-      "id": 5
+      "title": "json-server",
+      "author": "typicode"
     }
-  ]
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
 }
