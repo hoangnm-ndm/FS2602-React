@@ -1,10 +1,13 @@
-import React from "react";
+import { UserContext } from "@/context/userContext";
+import React, { useContext } from "react";
 import { NavLink } from "react-router";
 
 const HeaderClient = () => {
+  const { user } = useContext(UserContext);
   return (
     <header>
       <div className="logo">Logo</div>
+      <div>Hello {user.fullname}</div>
       <nav>
         <ul>
           <li>

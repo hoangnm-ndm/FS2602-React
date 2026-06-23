@@ -47,7 +47,7 @@ const RegisterPage = () => {
         data.user &&
         window.confirm("Đăng ký thành công! Chuyển sang trang đăng nhập?")
       ) {
-        nav("/login");
+        nav("/auth/login");
       }
     } catch (error) {
       console.error(error);
