@@ -6,7 +6,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Link, useNavigate } from "react-router";
 
 import { registerSchema } from "@/schemas/authSchema";
-import { authRegister } from "@/api/authApi";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -18,9 +17,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { useAuth } from "@/context/AuthContext";
 
 const RegisterPage = () => {
   const nav = useNavigate();
+  const { register: registerAuth } = useAuth();
 
   const {
     handleSubmit,
@@ -40,7 +41,7 @@ const RegisterPage = () => {
   const handleRegister = async (dataBody) => {
     try {
       const { confirmPass, ...payload } = dataBody;
-      const { data } = await authRegister(payload);
+      const { data } = await registerAuth(dataBody);
       console.log(data);
       if (
         data?.data?.email &&
@@ -145,7 +146,7 @@ const RegisterPage = () => {
             </div>
 
             <div className="text-right text-sm">
-              <Link to="/login" className="text-primary hover:underline">
+              <Link to="/auth/login" className="text-primary hover:underline">
                 Đã có tài khoản?
               </Link>
             </div>

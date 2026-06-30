@@ -12,9 +12,11 @@ import { Label } from "@/components/ui/label";
 
 import { loginSchema } from "@/schemas/authSchema";
 import { authLogin } from "@/api/authApi";
+import { useAuth } from "@/context/AuthContext";
 
 const LoginPage = () => {
   const nav = useNavigate();
+  const { login } = useAuth();
 
   const {
     handleSubmit,
@@ -31,11 +33,9 @@ const LoginPage = () => {
 
   const handleLogin = async (dataUser) => {
     try {
-      const { data } = await authLogin(dataUser);
+      const { data } = await login(dataUser);
       console.log(data);
       if (data.accessToken) {
-        localStorage.setItem("accessToken", data.accessToken);
-        localStorage.setItem("user", JSON.stringify(data.data));
         if (window.confirm("Đăng nhập thành công! Quay lại trang chủ?")) {
           nav("/");
         }
@@ -45,7 +45,7 @@ const LoginPage = () => {
       alert(
         err.response?.data?.message || "Email hoặc mật khẩu không chính xác."
       );
-      // reset();
+      reset();
     }
   };
 
@@ -93,7 +93,10 @@ const LoginPage = () => {
             </div>
 
             <div className="text-right text-sm">
-              <Link to="/register" className="text-primary hover:underline">
+              <Link
+                to="/auth/register"
+                className="text-primary hover:underline"
+              >
                 Chưa có tài khoản?
               </Link>
             </div>
