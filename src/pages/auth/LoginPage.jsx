@@ -32,23 +32,20 @@ const LoginPage = () => {
   const handleLogin = async (dataUser) => {
     try {
       const { data } = await authLogin(dataUser);
-
+      console.log(data);
       if (data.accessToken) {
         localStorage.setItem("accessToken", data.accessToken);
-        localStorage.setItem("user", JSON.stringify(data.user));
-
+        localStorage.setItem("user", JSON.stringify(data.data));
         if (window.confirm("Đăng nhập thành công! Quay lại trang chủ?")) {
           nav("/");
         }
       }
     } catch (err) {
       console.error("Login failed:", err);
-
       alert(
         err.response?.data?.message || "Email hoặc mật khẩu không chính xác."
       );
-
-      reset();
+      // reset();
     }
   };
 

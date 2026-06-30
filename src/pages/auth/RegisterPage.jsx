@@ -30,7 +30,7 @@ const RegisterPage = () => {
   } = useForm({
     resolver: zodResolver(registerSchema),
     defaultValues: {
-      username: "",
+      fullName: "",
       email: "",
       password: "",
       confirmPass: "",
@@ -40,22 +40,20 @@ const RegisterPage = () => {
   const handleRegister = async (dataBody) => {
     try {
       const { confirmPass, ...payload } = dataBody;
-
       const { data } = await authRegister(payload);
-
+      console.log(data);
       if (
-        data.user &&
+        data?.data?.email &&
         window.confirm("Đăng ký thành công! Chuyển sang trang đăng nhập?")
       ) {
         nav("/auth/login");
       }
     } catch (error) {
       console.error(error);
-
       alert(
         error.response?.data?.message || "Đăng ký thất bại. Vui lòng thử lại."
       );
-
+      console.log(error);
       reset();
     }
   };
@@ -95,17 +93,17 @@ const RegisterPage = () => {
 
             {/* Username */}
             <div className="space-y-2">
-              <Label htmlFor="username">Tên đăng nhập</Label>
+              <Label htmlFor="fullName">Tên đăng nhập</Label>
 
               <Input
-                id="username"
+                id="fullName"
                 placeholder="Nhập tên đăng nhập"
-                {...register("username")}
+                {...register("fullName")}
               />
 
-              {errors.username && (
+              {errors.fullName && (
                 <p className="text-sm text-destructive">
-                  {errors.username.message}
+                  {errors.fullName.message}
                 </p>
               )}
             </div>
